@@ -48,37 +48,13 @@ npm install -g @anthropic-ai/claude-code
 
 ## Installation
 
-### Option 1 — Install via Claude Code (recommended)
-
-In any Claude Code session, run:
-
-```
-/install-skill git@github.com:medeiroz/openscad-master-skill.git
-```
-
-Or clone and install locally:
+Run this command in your terminal:
 
 ```bash
-git clone git@github.com:medeiroz/openscad-master-skill.git
-cd openscad-master-skill
-claude /install-skill .
+npx skills add medeiroz/openscad-master-skill
 ```
 
-### Option 2 — Manual installation
-
-Clone the repository into your Claude Code skills directory:
-
-```bash
-# macOS / Linux
-git clone git@github.com:medeiroz/openscad-master-skill.git \
-  ~/.claude/skills/openscad-master
-
-# Windows (PowerShell)
-git clone git@github.com:medeiroz/openscad-master-skill.git `
-  "$env:USERPROFILE\.claude\skills\openscad-master"
-```
-
-That's it — Claude Code picks up skills automatically from that directory.
+That's it. The skill is installed and Claude Code will pick it up automatically in the next session.
 
 ---
 
