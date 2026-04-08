@@ -1,0 +1,196 @@
+{
+  "skill_name": "openscad-master",
+  "iteration": 1,
+  "created_at": "2026-04-08",
+  "evals": [
+    {
+      "id": 0,
+      "name": "parametric-box-with-lid",
+      "prompt": "Create a parametric box with lid, 100mm x 60mm x 40mm, with 2mm wall thickness and 4 M3 mounting holes in the corners.",
+      "expected_output": "OpenSCAD code with parametric variables at top, box body with cavity, lid, and 4 hole positions. Should include comments showing parameter ranges.",
+      "test_file": "test-parametric-box.scad",
+      "assertions": [
+        {
+          "type": "file_exists",
+          "description": "SCAD file was created"
+        },
+        {
+          "type": "contains",
+          "pattern": "box_width",
+          "description": "Has parametric variable for width"
+        },
+        {
+          "type": "contains",
+          "pattern": "wall_thickness",
+          "description": "Has parametric variable for wall thickness"
+        },
+        {
+          "type": "contains",
+          "pattern": "difference\\(\\)",
+          "description": "Uses difference for cavity"
+        },
+        {
+          "type": "contains",
+          "pattern": "hole_positions",
+          "description": "Has mounting hole positions"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "l-bracket-with-holes",
+      "prompt": "Design an L-bracket that's 40mm wide, 30mm deep, 25mm tall, with 4mm thick walls and two M4 countersunk mounting holes in the base.",
+      "expected_output": "OpenSCAD code for L-shaped bracket with proper difference() operations for holes with countersinks.",
+      "test_file": "test-l-bracket.scad",
+      "assertions": [
+        {
+          "type": "file_exists",
+          "description": "SCAD file was created"
+        },
+        {
+          "type": "contains",
+          "pattern": "base_width\\s*=\\s*40",
+          "description": "Has correct base width"
+        },
+        {
+          "type": "contains",
+          "pattern": "wall_height\\s*=\\s*25",
+          "description": "Has correct wall height"
+        },
+        {
+          "type": "contains",
+          "pattern": "csink",
+          "description": "Has countersunk holes"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "collision-detection",
+      "prompt": "I have two parts - a drawer that's 300mm x 200mm x 50mm and a cabinet interior of 320mm x 220mm x 60mm. Check if there's enough clearance between them and show me how to detect collisions.",
+      "expected_output": "OpenSCAD code demonstrating collision detection using intersection() and debug modifiers, with clearance calculation.",
+      "assertions": [
+        {
+          "type": "contains",
+          "pattern": "intersection\\(\\)",
+          "description": "Uses intersection for collision detection"
+        },
+        {
+          "type": "contains",
+          "pattern": "color\\(",
+          "description": "Uses color for visualization"
+        },
+        {
+          "type": "contains",
+          "pattern": "clearance",
+          "description": "Includes clearance calculation"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "label-on-face",
+      "prompt": "Add a 'FRONT' label to the top face of this cube: cube([50, 30, 20]); Show me both the BOSL2 attach method and a fallback without libraries.",
+      "expected_output": "Two versions of labeled cube code: one using BOSL2 attach(), one using manual translate/rotate positioning.",
+      "assertions": [
+        {
+          "type": "contains",
+          "pattern": "attach\\(",
+          "description": "Shows BOSL2 attach method"
+        },
+        {
+          "type": "contains",
+          "pattern": "linear_extrude",
+          "description": "Uses linear_extrude for text"
+        },
+        {
+          "type": "contains",
+          "pattern": "translate\\(",
+          "description": "Shows fallback with translate"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "export-with-params",
+      "prompt": "Export the attached model to STL for 3D printing. The model has a parameter 'width' that I want to set to 80mm instead of the default.",
+      "expected_output": "Command to export STL with parameter override: node scripts/export.mjs model.scad output.stl --params \"width=80\"",
+      "assertions": [
+        {
+          "type": "contains",
+          "pattern": "node scripts/export\\.mjs",
+          "description": "Shows export command"
+        },
+        {
+          "type": "contains",
+          "pattern": "--params",
+          "description": "Shows parameter override syntax"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "extract-parameters",
+      "prompt": "What parameters can I customize in this OpenSCAD model? Extract all the tunable parameters with their ranges and default values.",
+      "expected_output": "JSON or table output showing parameter names, types, default values, and range/options from comment annotations.",
+      "assertions": [
+        {
+          "type": "contains",
+          "pattern": "extract-params\\.mjs",
+          "description": "References extract-params script"
+        },
+        {
+          "type": "contains",
+          "pattern": "\\[\\d+:\\d+\\]",
+          "description": "Shows range syntax in output"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "diagnose-error",
+      "prompt": "This OpenSCAD code has an error: 'ERROR: line 15: Unexpected semicolon'. Help me diagnose and fix it.",
+      "expected_output": "Analysis of error with suggestion for fix, potentially using diagnose.mjs to parse the error and provide guidance.",
+      "assertions": [
+        {
+          "type": "contains",
+          "pattern": "diagnose\\.mjs",
+          "description": "References diagnose script"
+        },
+        {
+          "type": "contains",
+          "pattern": "line\\s*15",
+          "description": "Identifies problematic line"
+        },
+        {
+          "type": "contains",
+          "pattern": "semicolon",
+          "description": "Explains the semicolon issue"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "multi-angle-preview",
+      "prompt": "Generate multi-angle preview images (isometric, front, top, sides) for my model to visually validate it before exporting.",
+      "expected_output": "Command to generate previews: node scripts/render.mjs model.scad ./previews/ with instructions to use read tool to examine each angle.",
+      "assertions": [
+        {
+          "type": "contains",
+          "pattern": "node scripts/render\\.mjs",
+          "description": "Shows render command"
+        },
+        {
+          "type": "contains",
+          "pattern": "isometric|front|top",
+          "description": "Mentions camera angles"
+        },
+        {
+          "type": "contains",
+          "pattern": "read\\s+tool",
+          "description": "Instructs to use read tool"
+        }
+      ]
+    }
+  ]
+}
