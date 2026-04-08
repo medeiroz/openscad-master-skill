@@ -20,8 +20,32 @@ Before installing the skill, you need:
 
 ### 1. OpenSCAD (CLI version)
 
-Download from [openscad.org/downloads.html](https://openscad.org/downloads.html) and make sure it's available in your PATH.
+Download from [openscad.org/downloads.html](https://openscad.org/downloads.html) or install via package manager.
 
+> **Windows:** O instalador **não adiciona o OpenSCAD ao PATH automaticamente**. Siga os passos abaixo depois de instalar.
+
+**macOS:**
+```bash
+brew install openscad
+```
+
+**Linux:**
+```bash
+sudo apt install openscad
+```
+
+**Windows (recomendado — adiciona ao PATH automaticamente):**
+```powershell
+winget install OpenSCAD.OpenSCAD
+```
+
+**Windows (instalador manual):** Após instalar de openscad.org, adicione ao PATH:
+1. Abra **Iniciar** → pesquise "Variáveis de Ambiente" → "Editar as variáveis de ambiente do sistema"
+2. Clique em **Variáveis de Ambiente** → em "Variáveis do usuário", selecione **Path** → **Editar**
+3. Clique em **Novo** e adicione: `C:\Program Files\OpenSCAD`
+4. Clique OK em todos os diálogos e **reinicie o terminal**
+
+Verifique a instalação:
 ```bash
 openscad --version
 # OpenSCAD version 2025.01.00
@@ -173,23 +197,31 @@ After 3 render-refine cycles without convergence, it asks you for clarification 
 
 ### OpenSCAD not found
 
-If `openscad` is not in PATH, the skill will:
-- Generate the `.scad` code for you to open manually in the OpenSCAD app
-- Provide step-by-step instructions to render/export manually
-- Describe the expected visual result
+No **Windows**, o OpenSCAD não é adicionado ao PATH automaticamente. Verifique e corrija:
 
-To fix permanently, add OpenSCAD to your PATH:
+```powershell
+# Verificar se está instalado
+Test-Path "C:\Program Files\OpenSCAD\openscad.exe"
 
-```bash
-# macOS (Homebrew)
-brew install openscad
+# Adicionar ao PATH temporariamente (sessão atual)
+$env:PATH += ";C:\Program Files\OpenSCAD"
 
-# Linux
-sudo apt install openscad
-
-# Windows — add to PATH in System Settings
-# Default location: C:\Program Files\OpenSCAD\openscad.exe
+# Confirmar
+openscad --version
 ```
+
+Para corrigir permanentemente, use o winget (recomendado):
+
+```powershell
+winget install OpenSCAD.OpenSCAD
+```
+
+Ou adicione `C:\Program Files\OpenSCAD` manualmente ao PATH do usuário via Variáveis de Ambiente do sistema.
+
+Se `openscad` ainda não for encontrado, a skill:
+- Gera o código `.scad` para você abrir manualmente no app OpenSCAD
+- Fornece instruções passo a passo para renderizar/exportar
+- Descreve o resultado visual esperado
 
 ### Blank renders
 

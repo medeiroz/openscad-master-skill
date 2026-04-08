@@ -34,9 +34,38 @@ openscad --version
 node --version
 ```
 
+> **Windows note:** OpenSCAD is not automatically added to PATH on Windows. After installing,
+> add it manually (see PATH setup below) or the skill will fall back to manual mode.
+
+### Windows PATH Setup
+
+If `openscad --version` fails, add OpenSCAD to PATH:
+
+**Option A — PowerShell (current session only):**
+```powershell
+$env:PATH += ";C:\Program Files\OpenSCAD"
+```
+
+**Option B — Permanent (recommended):**
+1. Open **Start** → search "Environment Variables" → "Edit the system environment variables"
+2. Click **Environment Variables** → under "User variables", select **Path** → **Edit**
+3. Click **New** and add: `C:\Program Files\OpenSCAD`
+4. Click OK on all dialogs, then **restart your terminal**
+
+**Option C — winget:**
+```powershell
+winget install OpenSCAD.OpenSCAD
+# winget adds it to PATH automatically
+```
+
+Verify after setup:
+```bash
+openscad --version
+```
+
 ### Fallback Chain
 
-If OpenSCAD CLI is not available, the skill will:
+If OpenSCAD CLI is not available (e.g., not in PATH), the skill will:
 
 1. Generate OpenSCAD code for the user to open manually in the OpenSCAD app
 2. Provide instructions on how to render/export manually
@@ -332,10 +361,29 @@ node scripts/export.mjs box.scad box_large.stl --params "width=80,height=60"
 
 ### OpenSCAD Not Found
 
-If `openscad` command is not available:
+On **Windows**, OpenSCAD is not added to PATH automatically after install. Run in PowerShell:
 
-1. The skill will generate code for manual use
-2. Provide instructions to open in OpenSCAD app
+```powershell
+# Check if OpenSCAD is installed
+Test-Path "C:\Program Files\OpenSCAD\openscad.exe"
+
+# Add to PATH for current session
+$env:PATH += ";C:\Program Files\OpenSCAD"
+
+# Verify
+openscad --version
+```
+
+For a permanent fix, add `C:\Program Files\OpenSCAD` to the user PATH via System Settings, or use winget which handles PATH automatically:
+
+```powershell
+winget install OpenSCAD.OpenSCAD
+```
+
+If `openscad` is still not available, the skill will:
+
+1. Generate code for manual use in the OpenSCAD app
+2. Provide instructions to render/export manually
 3. Describe expected visual results for user validation
 
 ### Render Fails
